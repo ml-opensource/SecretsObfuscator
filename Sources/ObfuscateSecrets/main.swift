@@ -251,8 +251,7 @@ func retrieveNamedArguments(_ args: [String]) -> (args: [String], named: [String
     return (args: copy, named: namedArgs)
 }
 
-let arguments = Array(ProcessInfo().arguments.drop(while: { $0 != "--" }).dropFirst(1))
-
+let arguments = Array(ProcessInfo().arguments.dropFirst())
 let (nonNamedArgs, namedArgs) = retrieveNamedArguments(arguments)
 
 guard nonNamedArgs.count >= 1 else {
@@ -263,9 +262,9 @@ guard nonNamedArgs.count >= 1 else {
 
     Examples:
 
-    gen-secrets secrets.json > SData.swift
-    gen-secrets secrets.json SData.swift
-    gen-secrets secrets.json
+    obfuscate-secrets secrets.json > SData.swift
+    obfuscate-secrets secrets.json SData.swift
+    obfuscate-secrets secrets.json
 
     """)
 

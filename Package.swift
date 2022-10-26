@@ -6,9 +6,29 @@ import PackageDescription
 let package = Package(
     name: "ObfuscateSecrets",
     products: [
-        .executable(name: "gen-secrets", targets: ["gen-secrets"])
+        .executable(
+            name: "ObfuscateSecrets",
+            targets: ["ObfuscateSecrets"]
+        ),
+        .plugin(
+            name: "ObfuscateSecretsPlugin",
+            targets: ["ObfuscateSecretsPlugin"]
+        )
     ],
     targets: [
-        .executableTarget(name: "gen-secrets")
+        .executableTarget(name: "ObfuscateSecrets"),
+        .plugin(
+            name: "ObfuscateSecretsPlugin",
+            capability: .command(
+                intent: .custom(
+                    verb: "obfuscate-secrets",
+                    description: "Obfuscate secrets"),
+                permissions: [
+                    .writeToPackageDirectory(reason: "Generate Secrets file")
+                ]),
+            dependencies: [
+                "ObfuscateSecrets"
+            ]
+        )
     ]
 )

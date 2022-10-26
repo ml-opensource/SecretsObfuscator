@@ -1,2 +1,3 @@
-# SecretsObfuscator
-Generate obfuscate secrets files
+# CoolSecrets
+
+A description of this package.

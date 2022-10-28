@@ -50,18 +50,14 @@ extension SecretsSpec {
             }
 
             /// Key used to encrypt and decrypt secrets
-            private static var k: [UInt8] = {
-                return [
-                    \(Placeholder.key)
-                ]
-            }()
+            private static let k: [UInt8] = [
+                \(Placeholder.key)
+            ]
 
             /// Secrets in byte form.
-            private static var d: [UInt8] = {
-                return [
-                    \(Placeholder.secrets)
-                ]
-            }()
+            private static let d: [UInt8] = [
+                \(Placeholder.secrets)
+            ]
         }
 
         """
@@ -95,7 +91,7 @@ extension SecretsSpec {
                     .map { String(format: "0x%02X", $0) }
                     .joined(separator: ", ")
             }
-            .joined(separator: ",\n            ")
+            .joined(separator: ",\n        ")
     }
     
     private func enumCases(_ secretsData: [SecretData]) -> String {
@@ -122,7 +118,7 @@ extension SecretsSpec {
                     .map { String(format: "0x%02X", $0) }
                     .joined(separator: ", ")
             }
-            .joined(separator: ",\n            ")
+            .joined(separator: ",\n        ")
     }
     
     private func secretsData(secrets: [String: String]) -> [SecretData] {
@@ -187,6 +183,8 @@ func generateSecrets(inputData: Data, name: String, key: String) throws -> Strin
     guard !spec.secrets.isEmpty else {
         throw GenerateSecretsError.specWithNoSecrets
     }
+    
+    let name = name.replacingOccurrences(of: ".swift", with: "")
     
     return spec.generateSecrets(name: name)
 }
